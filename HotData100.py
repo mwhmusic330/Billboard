@@ -1,4 +1,5 @@
 import pandas as pd 
+import datetime
 import streamlit as st
 import plotly.express as px
 
@@ -23,12 +24,12 @@ option2 = st.multiselect(
         
 mask = df[option].apply(lambda x: x in option2)
 st.write(option)
-st.write(option2)
-mask
-df[mask]
-#### vx = df[option].value_counts().reset_index()
-#### fig = px.bar(vx, 
-             #### x=option,
-             #### y='count', 
-             #### title='Billboard HotGraph')
-#### st.plotly_chart(fig)
+df[mask]['Weeks at Number One'].sum()
+df['Date'] = pd.to_datetime(df['Date'])
+df['Year'] = df['Date'].dt.year
+fig = px.bar(df[mask], 
+            x='Artist',
+            y='Weeks at Number One', 
+            color= 'Artist',
+            title='Billboard HotGraph')
+st.plotly_chart(fig)
