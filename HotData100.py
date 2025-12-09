@@ -11,6 +11,8 @@ else:
 
 
 df = frames['Data']
+df['Date'] = pd.to_datetime(df['Date'])
+df['Year'] = df['Date'].dt.year
 
 st.title(":red[Hot] Graph App")
 option = st.selectbox(
@@ -25,8 +27,6 @@ option2 = st.multiselect(
 mask = df[option].apply(lambda x: x in option2)
 st.write(option)
 df[mask]['Weeks at Number One'].sum()
-df['Date'] = pd.to_datetime(df['Date'])
-df['Year'] = df['Date'].dt.year
 fig = px.bar(df[mask], 
             x='Artist',
             y='Weeks at Number One', 
