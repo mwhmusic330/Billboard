@@ -26,7 +26,8 @@ option2 = st.multiselect(
         
 mask = df[option].apply(lambda x: x in option2)
 st.write(option)
-df[mask]['Weeks at Number One'].sum()
+vx = df.groupby(mask)['Weeks at Number One'].sum()
+vx
 fig = px.bar(df[mask], 
             x='Artist',
             y='Weeks at Number One', 
