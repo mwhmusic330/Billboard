@@ -22,12 +22,13 @@ option = st.selectbox(
 
 option2 = st.multiselect(
         "Select Entries to see total weeks at no.1!",
-        df[option])
+        df[option].unique())
         
 mask = df[option].apply(lambda x: x in option2)
 st.write(option)
-vx = df.groupby(mask)['Weeks at Number One'].sum()
+vx = df[mask].groupby('Artist')['Weeks at Number One'].sum()
 vx
+
 fig = px.bar(df[mask], 
             x='Artist',
             y='Weeks at Number One', 
